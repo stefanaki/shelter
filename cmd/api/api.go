@@ -7,14 +7,24 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/stefanaki/shelter/internal/store"
 )
 
 type api struct {
 	config config
+	store  store.Store
 }
 
 type config struct {
 	address string
+	db      dbConfig
+}
+
+type dbConfig struct {
+	address            string
+	maxOpenConnections int
+	maxIdleConnections int
+	maxIdleTime        time.Duration
 }
 
 func (a *api) mount() http.Handler {

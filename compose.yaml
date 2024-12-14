@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:alpine3.20
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=shelter
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+      PGADMIN_DEFAULT_EMAIL: 'postgres@postgres.com'
+      PGADMIN_DEFAULT_PASSWORD: 'postgres'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+      - pgadmin-conf:/pgadmin4
+
+    ports:
+      - '2345:80'
+    depends_on:
+      - db
+volumes:
+  db:
+  pgadmin:
+  pgadmin-conf:
