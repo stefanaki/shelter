@@ -19,7 +19,7 @@ RETURNING id, username, password, email, created_at
 
 type CreateUserParams struct {
 	Username string
-	Password string
+	Password []byte
 	Email    string
 }
 

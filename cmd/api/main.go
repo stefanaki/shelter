@@ -11,9 +11,12 @@ import (
 	"github.com/stefanaki/shelter/internal/store"
 )
 
+const API_VERSION = "0.0.1"
+
 func main() {
 	cfg := config{
 		address: env.GetString("ADDR", ":8080"),
+		env:     env.GetString("ENV", "development"),
 		db: dbConfig{
 			address:            env.GetString("DB_URI", "postgres://postgres:postgres@localhost/shelter?sslmode=disable"),
 			maxOpenConnections: env.GetInt("DB_MAX_OPEN_CONNS", 30),

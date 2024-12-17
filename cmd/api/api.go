@@ -16,6 +16,7 @@ type api struct {
 }
 
 type config struct {
+	env     string
 	address string
 	db      dbConfig
 }
@@ -38,6 +39,23 @@ func (a *api) mount() http.Handler {
 
 	r.Route("/v1", func(r chi.Router) {
 		r.Get("/health", a.healthcheckHandler)
+
+		r.Route("/users", func(r chi.Router) {
+			r.Post("/", a.createUserHandler)
+		})
+
+		r.Route("/posts", func(r chi.Router) {
+			r.Post("/", a.createPostHandler)
+
+			r.Route("/{id}", func(r chi.Router) {
+				r.Use(a.withPostContext)
+				r.Get("/", a.retrievePostHandler)
+				r.Patch("/", a.updatePostHandler)
+				r.Delete("/", a.deletePostHandler)
+				r.Get("/comments", a.listPostCommentsHandler)
+			})
+
+		})
 	})
 
 	return r

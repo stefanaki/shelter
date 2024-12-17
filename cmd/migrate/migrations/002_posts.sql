@@ -1,6 +1,6 @@
 -- +goose Up
 CREATE TABLE posts (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     tags TEXT[],
