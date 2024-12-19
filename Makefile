@@ -10,3 +10,6 @@ reset:
 
 generate:
 	sqlc generate
+
+docker-build:
+	docker build -t stefanaki/shelter:dev .
